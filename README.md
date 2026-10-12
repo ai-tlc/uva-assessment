@@ -1,22 +1,13 @@
 ## Welcome!
 This is the Github page for Sebastiaan den Broeder's AI Exposure Scan tool for the University of Amsterdam.
 ## URL
-Current URL: [rss.denbroeder.eu/host/assessment](https://rss.denbroeder.eu/host/assessment/)
+Current URL: [tools.denbroeder.eu/host/assessment](https://rss.denbroeder.eu/host/assessment/)
 
 ### Faculty-specific URLs
-The tool can automatically select a faculty from the URL. The static-hosting-friendly formats are:
+The tool can automatically select a faculty from the URL. For instance: 
 
-- `index.html?faculty=fmg`
-- `index.html#/fmg`
-
-For example:
-
-- `/fmg` → FMG
-- `/eb` → EB
-- `/fdr` → FdR
-
-The slug matching is case-insensitive. The shorter `/fmg` format is also supported, but requires the web server to route unknown paths back to `index.html`.
-ACTA and FNWI are temporarily disabled for faculty URL selection.
+- `tools.denbroeder.eu/host/assessment/#/fmg`  → FMG
+- `tools.denbroeder.eu/host/assessment/#/fdr`  → FdR
 
 ## Work in Progress
 Please see Issues > Feedback for what we're working on!
