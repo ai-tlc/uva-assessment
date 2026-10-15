@@ -206,7 +206,10 @@ function applyStaticTranslations() {
     migrationSaveBtn.textContent = tx.migrationSaveBtn;
   }
   document.getElementById("faculty-placeholder").textContent = tx.facultyPlaceholder;
-  document.getElementById('contact-popup').innerHTML = tx.orbText;
+  const contactPopup = document.getElementById('contact-popup');
+  if (contactPopup) {
+    contactPopup.innerHTML = tx.orbText;
+  }
   const helpCloseBtn = document.getElementById("exposure-help-close");
   if (helpCloseBtn) {
     helpCloseBtn.textContent = tx.close || "Close";
