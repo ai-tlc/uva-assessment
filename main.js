@@ -140,6 +140,7 @@ async function loadAll() {
     // Ensure the custom collapsed display is initialized on the first page load.
     setFacultyOptionLabels(false);
     maybeShowIntro();
+    showMigrationBlocker();
   }
 
 // ─── Language ─────────────────────────────────────────────────────────────────
@@ -196,6 +197,14 @@ function applyStaticTranslations() {
   document.getElementById("intro-title").textContent         = tx.introTitle;
   document.getElementById("intro-body").textContent          = tx.introBody;
   document.getElementById("intro-cta").textContent           = tx.introCta;
+  const migrationTitle = document.getElementById("migration-title");
+  const migrationBody = document.getElementById("migration-body");
+  const migrationSaveBtn = document.getElementById("migration-save-btn");
+  if (migrationTitle && migrationBody && migrationSaveBtn) {
+    migrationTitle.textContent = tx.migrationTitle;
+    migrationBody.innerHTML = tx.migrationBody;
+    migrationSaveBtn.textContent = tx.migrationSaveBtn;
+  }
   document.getElementById("faculty-placeholder").textContent = tx.facultyPlaceholder;
   document.getElementById('contact-popup').innerHTML = tx.orbText;
   const helpCloseBtn = document.getElementById("exposure-help-close");
@@ -992,11 +1001,11 @@ function getCourseTitleForFilename() {
   return title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]+/g, "") || "course";
 }
 
-function saveResult() {
+function saveResult(allowIncomplete = false) {
   if (typeof html2canvas === "undefined") return;
 
   const total = assessments.reduce((sum, a) => sum + a.pct, 0);
-  if (total !== 100) {
+  if (total > 100 || (!allowIncomplete && total !== 100)) {
     const tx = TX[lang];
     const raw = total > 100
       ? tx.msgWeightsOver?.replace("{total}", total)
@@ -1071,6 +1080,28 @@ function saveResult() {
       }
       const addCard = clonedDoc.getElementById("add-card");
       if (addCard) addCard.classList.add("hidden");
+
+      // The assessment and feedback cards use entrance animations. html2canvas
+      // can clone them while their animation is still at opacity: 0, which
+      // makes the saved image contain only the course and consult cards.
+      ["structure-card", "feedback-card"].forEach(id => {
+        const card = clonedDoc.getElementById(id);
+        if (!card) return;
+
+        card.classList.remove("hidden", "section-reveal-structure", "section-reveal-feedback");
+        card.style.animation = "none";
+        card.style.opacity = "1";
+        card.style.transform = "none";
+      });
+
+      // Assessment rows and feedback content have their own fade-in animations.
+      // Clear those as well; otherwise html2canvas may capture them mid-animation.
+      clonedDoc.querySelectorAll(".is-entering, .feedback-content-update").forEach(element => {
+        element.classList.remove("is-entering", "feedback-content-update");
+        element.style.animation = "none";
+        element.style.opacity = "1";
+        element.style.transform = "none";
+      });
     }
   }).then(canvas => {
     const link = document.createElement("a");
@@ -1129,6 +1160,18 @@ function dismissIntro() {
   document.getElementById("intro-overlay").style.display = "none";
   try { localStorage.setItem(INTRO_KEY, "1"); } catch (e) {}
 }
+
+function showMigrationBlocker() {
+  const overlay = document.getElementById("migration-overlay");
+  if (!overlay) return;
+
+  overlay.style.display = "flex";
+  document.getElementById("capture-area")?.setAttribute("inert", "");
+  document.getElementById("contact-orb")?.setAttribute("inert", "");
+  document.getElementById("contact-popup")?.setAttribute("inert", "");
+  setTimeout(() => document.getElementById("migration-save-btn")?.focus(), 50);
+}
+
 function openExposureHelp() {
   const overlay = document.getElementById("exposure-help-overlay");
   if (overlay) {

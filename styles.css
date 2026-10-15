@@ -1175,6 +1175,21 @@
       padding: 16px;
     }
 
+    /* Keep the temporary migration notice above every other overlay. */
+    .migration-overlay {
+      z-index: 10000;
+    }
+
+    #migration-body a {
+      color: #bc0031;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    #migration-body a:hover {
+      color: #840022;
+    }
+
     .intro-box {
       max-width: 520px;
       background: #ffffff;

@@ -21,6 +21,9 @@
   "introTitle": "Welcome to the AI Exposure Scan!",
   "introBody": "This tool is aimed to help you reconsider the assessment structure of your course. To get started, fill out your course name and faculty, and then select your forms of assessment. The exposure score dynamically updates based on your changes, so feel free to play around with it. Keep in mind that this score should be considered an indication. Your work is automatically stored in your browser.",
   "introCta": "Get started",
+  "migrationTitle": "This tool has moved",
+  "migrationBody": "The AI Exposure Scan is now available at <a href=\"https://ai-tlc.github.io/uva-assessment/\" target=\"_blank\" rel=\"noopener noreferrer\">https://ai-tlc.github.io/uva-assessment/</a>. Please use the new site from now on. If you have already started working here, save your result before leaving.",
+  "migrationSaveBtn": "Save result",
   "facultyPlaceholder": "Faculty...",
   "facultyNames": {
     "FdG": "Faculty of Medicine",
