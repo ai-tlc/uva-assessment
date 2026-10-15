@@ -27,7 +27,7 @@
 
   "faculties": {
     "AUC": {
-      "visible": true,
+      "visible": false,
       "assessments": [
         "creative-work",
         "group-work",
@@ -69,7 +69,7 @@
       }
     },
     "EB": {
-      "visible": true,
+      "visible": false,
       "assessments": [
         "creative-work",
         "group-work",
