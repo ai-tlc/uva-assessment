@@ -1140,7 +1140,7 @@ function openDownloadConfirm() {
   const body = document.getElementById("download-confirm-body");
   if (!overlay || !body) return;
 
-  body.textContent = interpolate(t("downloadConfirmBody"), {
+  body.innerHTML = interpolate(t("downloadConfirmBody"), {
     filename: `${getCourseTitleForFilename()}-ai-exposure.png`
   });
   overlay.style.display = "flex";

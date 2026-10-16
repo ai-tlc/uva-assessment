@@ -26,7 +26,7 @@
   "migrationBody": "De AI Gevoeligheidsscan is nu beschikbaar op <a href=\"https://ai-tlc.github.io/uva-assessment/\" target=\"_blank\" rel=\"noopener noreferrer\">https://ai-tlc.github.io/uva-assessment/</a>. Gebruik vanaf nu de nieuwe site. Als je hier al begonnen was, sla dan eerst je resultaat op voordat je deze pagina verlaat.",
   "migrationSaveBtn": "Resultaat opslaan",
   "downloadConfirmTitle": "Resultaat downloaden?",
-  "downloadConfirmBody": "Je resultaat wordt gedownload met de naam {filename}. Je browser kan vragen waar je het wilt opslaan; anders vind je het in de map Downloads.",
+  "downloadConfirmBody": "Je resultaat wordt gedownload met de naam <strong>{filename}</strong>. Je browser kan vragen waar je het wilt opslaan; anders vind je het in de map Downloads.",
   "downloadConfirmBtn": "Resultaat downloaden",
   "downloadCancelBtn": "Annuleren",
   "facultyPlaceholder": "Faculteit...",
