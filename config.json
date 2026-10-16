@@ -27,7 +27,7 @@
 
   "faculties": {
     "AUC": {
-      "visible": false,
+      "visible": true,
       "assessments": [
         "creative-work",
         "group-work",
@@ -43,8 +43,8 @@
         "take-home-writing"
       ],
      "consultLink": {
-      "en": "mailto:sample?subject=AI%20Exposure%20Scan%20Consultation",
-      "nl": "mailto:sample?subject=AI%20Gevoeligheidsscan%20Consult"
+      "en": "mailto:j.f.hulsken@auc.nl;V.Tijms@uva.nl?subject=AI%20Exposure%20Scan%20Consultation",
+      "nl": "mailto:j.f.hulsken@auc.nl;V.Tijms@uva.nl?subject=AI%20Gevoeligheidsscan%20Consult"
       }
     },
     "FMG": {

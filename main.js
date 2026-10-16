@@ -21,6 +21,7 @@ let assessments = [];
 let assessmentSectionsVisible = false;
 let lang = "en";
 let renderedAssessmentIds = new Set();
+let pendingSaveAllowIncomplete = false;
 
 // ─── Interpolation helper ─────────────────────────────────────────────────────
 function interpolate(template, vars) {
@@ -194,6 +195,7 @@ function applyStaticTranslations() {
   document.getElementById("label-feedback").textContent      = tx.feedback;
   document.getElementById("consult-text").textContent        = tx.consultText;
   document.getElementById("consult-btn").textContent         = tx.consultBtn;
+  document.getElementById("footer-text").innerHTML            = tx.footerText;
   document.getElementById("intro-title").textContent         = tx.introTitle;
   document.getElementById("intro-body").textContent          = tx.introBody;
   document.getElementById("intro-cta").textContent           = tx.introCta;
@@ -213,6 +215,17 @@ function applyStaticTranslations() {
   const helpCloseBtn = document.getElementById("exposure-help-close");
   if (helpCloseBtn) {
     helpCloseBtn.textContent = tx.close || "Close";
+  }
+
+  const downloadConfirmTitle = document.getElementById("download-confirm-title");
+  const downloadConfirmBody = document.getElementById("download-confirm-body");
+  const downloadConfirmBtn = document.getElementById("download-confirm-btn");
+  const downloadCancelBtn = document.getElementById("download-cancel-btn");
+  if (downloadConfirmTitle && downloadConfirmBody && downloadConfirmBtn && downloadCancelBtn) {
+    downloadConfirmTitle.textContent = tx.downloadConfirmTitle;
+    downloadConfirmBody.textContent = tx.downloadConfirmBody;
+    downloadConfirmBtn.textContent = tx.downloadConfirmBtn;
+    downloadCancelBtn.textContent = tx.downloadCancelBtn;
   }
 
   const helpTitleEl = document.getElementById("exposure-help-title");
@@ -430,9 +443,11 @@ function showAssessmentSectionsOnce() {
 function revealAssessmentSections() {
   const structureCard = document.getElementById("structure-card");
   const feedbackCard = document.getElementById("feedback-card");
+  const footerText = document.getElementById("footer-text");
 
   structureCard.classList.remove("hidden");
   feedbackCard.classList.remove("hidden");
+  footerText.classList.remove("hidden");
 
   structureCard.classList.remove("section-reveal-structure");
   feedbackCard.classList.remove("section-reveal-feedback");
@@ -1004,7 +1019,7 @@ function getCourseTitleForFilename() {
   return title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]+/g, "") || "course";
 }
 
-function saveResult(allowIncomplete = false) {
+function saveResult(allowIncomplete = false, confirmed = false) {
   if (typeof html2canvas === "undefined") return;
 
   const total = assessments.reduce((sum, a) => sum + a.pct, 0);
@@ -1015,6 +1030,12 @@ function saveResult(allowIncomplete = false) {
       : tx.msgWeightsUnder?.replace("{total}", total).replace("{remaining}", 100 - total);
     const plain = (raw ?? "").replace(/<[^>]*>/g, "");
     alert(plain);
+    return;
+  }
+
+  if (!confirmed) {
+    pendingSaveAllowIncomplete = allowIncomplete;
+    openDownloadConfirm();
     return;
   }
 
@@ -1114,6 +1135,34 @@ function saveResult(allowIncomplete = false) {
   });
 }
 
+function openDownloadConfirm() {
+  const overlay = document.getElementById("download-confirm-overlay");
+  const body = document.getElementById("download-confirm-body");
+  if (!overlay || !body) return;
+
+  body.textContent = interpolate(t("downloadConfirmBody"), {
+    filename: `${getCourseTitleForFilename()}-ai-exposure.png`
+  });
+  overlay.style.display = "flex";
+  overlay.setAttribute("aria-hidden", "false");
+  setTimeout(() => document.getElementById("download-confirm-btn")?.focus(), 50);
+}
+
+function cancelSaveResult() {
+  const overlay = document.getElementById("download-confirm-overlay");
+  if (!overlay) return;
+
+  overlay.style.display = "none";
+  overlay.setAttribute("aria-hidden", "true");
+  pendingSaveAllowIncomplete = false;
+}
+
+function confirmSaveResult() {
+  const allowIncomplete = pendingSaveAllowIncomplete;
+  cancelSaveResult();
+  saveResult(allowIncomplete, true);
+}
+
 // ─── Reset ────────────────────────────────────────────────────────────────────
 function resetState() {
   if (!window.confirm(t("resetText"))) return;
@@ -1136,6 +1185,7 @@ function resetState() {
   document.getElementById("add-card").classList.add("hidden");
   document.getElementById("structure-card").classList.add("hidden");
   document.getElementById("feedback-card").classList.add("hidden");
+  document.getElementById("footer-text").classList.add("hidden");
   document.getElementById("header-save-btn").classList.add("hidden");
   document.getElementById("header-reset-btn").classList.add("hidden");
 

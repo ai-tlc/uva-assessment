@@ -1140,6 +1140,33 @@
       border-color: #bc0031;
     }
 
+    .footer-text {
+      color: #6b6562;
+      font-size: 0.7rem;
+      line-height: 1.5;
+      margin: -8px auto 0;
+      max-width: 680px;
+      text-align: center;
+    }
+
+    .footer-text a {
+      color: #840022;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .footer-text a:hover {
+      color: #bc0031;
+    }
+
+    body.dark-theme .footer-text {
+      color: #9ca3af;
+    }
+
+        body.dark-theme .footer-text a {
+      color: #9b0b2f;
+    }
+
     body.dark-theme .consult-card .save-result-btn {
       background: #1e293b;
       color: #fca5a5;
@@ -1278,6 +1305,23 @@
 
     .intro-btn:hover {
       background: #840022;
+    }
+
+    .download-confirm-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .download-cancel-btn {
+      background: transparent;
+      color: #840022;
+      border: 1px solid #bc0031;
+    }
+
+    .download-cancel-btn:hover {
+      background: #fce5eb;
+      color: #840022;
     }
 
     .intro-footer {
@@ -1474,6 +1518,17 @@
 
     body.dark-theme .intro-box p {
       color: #e5e7eb;
+    }
+
+    body.dark-theme .download-cancel-btn {
+      background: transparent;
+      color: #fca5a5;
+      border-color: #fca5a5;
+    }
+
+    body.dark-theme .download-cancel-btn:hover {
+      background: #3b0820;
+      color: #fecaca;
     }
 
     body.dark-theme .avv-label {
